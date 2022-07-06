@@ -8,8 +8,9 @@ User = get_user_model()
 class StudentTest(TestCase):
     def setUp(self):
         self.data = {
-            'username': 'Peter',
-            'email': 'peter@example.com'
+
+            'email': 'peter@example.com',
+            'password':'12345'
         }
         self.instance = User(**self.data)
 
@@ -20,4 +21,4 @@ class StudentTest(TestCase):
         new_count = User.objects.count()
 
         self.assertNotEqual(old_count, new_count)
-        self.assertEqual(self.instance.username, self.data.get('username'))
+        self.assertEqual(self.instance.email, self.data.get('email'))

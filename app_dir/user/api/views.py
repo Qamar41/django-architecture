@@ -26,7 +26,7 @@ class UserListAPIView(ListAPIView):
         if query:
             queryset_list = queryset_list.filter(
                 Q(email__icontains=query) |
-                Q(username__icontains=query)
+                Q(firstName__icontains=query)
             )
 
         return queryset_list.order_by('-id')
@@ -37,22 +37,3 @@ class UserCreateAPIView(CreateAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = User.objects.all()
 
-
-class UserDetailAPIView(RetrieveAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-
-class UserDeleteAPIView(DestroyAPIView):
-    queryset = User.objects.all()
-    permission_classes = [IsAuthenticated]
-    serializer_class = UserSerializer
-
-
-class UpdateAPIView(RetrieveUpdateAPIView):
-    permission_classes = [IsAuthenticatedOrReadOnly]
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-    def perform_update(self, serializer):
-        serializer.save(user=self.request.user)
